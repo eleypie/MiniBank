@@ -2,31 +2,61 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>MiniBank Login</title>
-    <link rel="stylesheet" th:href="@{/css/style.css(v=1.1)}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniBank - Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
-<div class="mobile-card">
-    <div class="logo-box">
-        <div class="logo-badge">Mini<span>Bank</span></div>
+<div class="mobile-card" style="justify-content: center;">
+
+    <!-- Logo Section -->
+    <div style="text-align: center; margin-bottom: 40px;">
+        <div style="display: inline-block; background: linear-gradient(135deg, rgba(0,180,216,0.1), rgba(72,202,228,0.05)); padding: 20px 30px; border-radius: 30px; border: 1px solid rgba(0,180,216,0.1);">
+            <div style="font-size: 48px; margin-bottom: 8px; background: linear-gradient(135deg, #00b4d8, #48cae4, #f4a261); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">✦</div>
+            <div style="font-size: 32px; font-weight: 800; background: linear-gradient(135deg, #00b4d8, #48cae4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; letter-spacing: -1px;">
+                Mini<span style="color: #f4a261; -webkit-text-fill-color: #f4a261;">Bank</span>
+            </div>
+            <div style="font-size: 12px; color: #4a5a7a; letter-spacing: 3px; text-transform: uppercase; margin-top: 4px;">Secure Banking</div>
+        </div>
     </div>
 
-    <p th:if="${error}" th:text="${error}" style="color: #ffdddd; font-size: 12px; text-align: center; margin-bottom: 15px; font-weight: bold; "></p>
+    <!-- Login Form -->
+    <div class="transaction-card">
+        <div class="transaction-title">Welcome Back</div>
 
-    <form th:action="@{/login}" method="post">
-        <div class="form-group">
-            <label>Enter mobile number</label>
-            <input type="text" name="mobileNumber" class="input-field" placeholder="09XX XXX XXXX" required>
+        <form th:action="@{/login}" method="post">
+            <div class="form-group">
+                <label>Mobile Number</label>
+                <input type="text" name="mobileNumber" class="input-field" placeholder="09XXXXXXXXX" required>
+            </div>
+
+            <div class="form-group">
+                <label>PIN</label>
+                <input type="password" name="pin" class="input-field" placeholder="Enter your 4-digit PIN" maxlength="4" required>
+            </div>
+
+            <p class="field-hint" th:if="${error}" th:text="${error}" style="color: #ff6b6b; text-align: center; margin-top: -8px; margin-bottom: 12px;">
+                Invalid credentials
+            </p>
+
+            <div class="confirm-row" style="justify-content: center;">
+                <button type="submit" class="confirm-btn" style="width: 100%; padding: 16px;">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i> Login
+                </button>
+            </div>
+        </form>
+
+        <div class="available-balance" style="margin-top: 16px;">
+            <span style="color: #4a5a7a;">Demo: 09171234567 / PIN: 1234</span>
         </div>
+    </div>
 
-        <div class="form-group">
-            <label>Enter PIN</label>
-            <input type="password" name="pin" class="input-field" placeholder="****" maxlength="4" required>
-        </div>
+    <div style="text-align: center; margin-top: 20px; color: #4a5a7a; font-size: 12px;">
+        &copy; 2026 MiniBank. All rights reserved.
+    </div>
 
-        <button type="submit" class="submit-btn">User Login</button>
-    </form>
 </div>
 
 </body>

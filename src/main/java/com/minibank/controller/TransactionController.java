@@ -5,26 +5,30 @@ import com.minibank.dao.TransactionDao;
 import com.minibank.model.Account;
 import com.minibank.model.Transaction;
 import com.minibank.model.User;
-
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
-public class DashboardController {
+public class TransactionController {
 
     private final AccountDao accountDao;
     private final TransactionDao transactionDao;
 
-    public DashboardController(AccountDao accountDao, TransactionDao transactionDao) {
+    public TransactionController(AccountDao accountDao, TransactionDao transactionDao) {
         this.accountDao = accountDao;
         this.transactionDao = transactionDao;
     }
 
-    @GetMapping("/dashboard")
-    public String showDashboard(HttpSession session, Model model) {
+    @GetMapping("/transactions")
+    public String showTransactions(@RequestParam(defaultValue = "ALL") String filter,
+                                   HttpSession session,
+                                   Model model) {
 
         User user = (User) session.getAttribute("loggedInUser");
 
@@ -35,25 +39,37 @@ public class DashboardController {
             return "redirect:/login";
         }
 
-        // ============================================================
-        // FETCH DATA FROM DATABASE
-        // ============================================================
         Account account = accountDao.getAccountByUserId(user.getId());
-        List<Transaction> history = (account != null)
-                ? transactionDao.getTransactionsByAccountId(account.getId())
-                : List.of();
+        if (account == null) {
+            return "redirect:/dashboard";
+        }
+
+        // ============================================================
+        // FETCH TRANSACTIONS FROM DATABASE
+        // ============================================================
+        List<Transaction> allTransactions = transactionDao.getTransactionsByAccountId(account.getId());
+
+        // ============================================================
+        // APPLY FILTER
+        // ============================================================
+        List<Transaction> filtered = "ALL".equalsIgnoreCase(filter)
+                ? allTransactions
+                : allTransactions.stream()
+                .filter(t -> t.getType().equalsIgnoreCase(filter))
+                .collect(Collectors.toList());
 
         // ============================================================
         // SET MODEL ATTRIBUTES FOR VIEW
         // ============================================================
         model.addAttribute("userName", user.getFirstName());
-        model.addAttribute("mobileNumber", user.getMobileNumber());
-        model.addAttribute("balance", (account != null) ? account.getBalance() : 0.00);
-        model.addAttribute("transactions", history);
+        model.addAttribute("accountId", account.getId());
+        model.addAttribute("accountBalance", account.getBalance());
+        model.addAttribute("filter", filter);
+        model.addAttribute("transactions", filtered);
 
         // ============================================================
         // RETURN VIEW
         // ============================================================
-        return "dashboard"; // Renders src/main/resources/templates/dashboard.html
+        return "transaction";
     }
 }

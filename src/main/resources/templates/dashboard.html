@@ -2,42 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiniBank Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
 <div class="mobile-card">
+
+    <!-- Header with Logout -->
     <div class="header">
-        <span style="font-size: 20px; cursor: pointer;">&larr;</span>
-        <div style="font-weight: bold; color: #8ed338;">Mini<span style="color: #fff;">Bank</span></div>
-        <div style="text-align: right;">
-            <div style="font-size: 12px; color: #a0a0a0;">Welcome back</div>
-            <div style="color: #8ed338; font-weight: bold; font-size: 14px;" th:text="${userName}">User</div>
+        <a class="logout-link" th:href="@{/logout}" title="Logout">
+            <i class="fas fa-power-off"></i>
+        </a>
+        <div class="brand">
+            <span class="brand-icon">✦</span>
+            <span class="brand-name">Mini<span>Bank</span></span>
+        </div>
+        <div class="welcome">
+            <div class="welcome-label">Welcome back</div>
+            <div class="welcome-name" th:text="${userName}">User</div>
         </div>
     </div>
 
+    <!-- Balance Card -->
     <div class="balance-card">
         <div class="balance-title">Current Balance</div>
         <div class="balance-amount">₱<span th:text="${balance}">0.00</span></div>
         <div class="account-number">Mobile No. <span th:text="${mobileNumber}">00000000000</span></div>
     </div>
 
+    <!-- Menu Options -->
     <div class="menu-options">
         <button class="menu-btn" onclick="window.location.href='/deposit'">
-            DEPOSIT
+            <span class="btn-icon">💰</span> DEPOSIT
         </button>
 
         <button class="menu-btn" onclick="window.location.href='/withdraw'">
-            WITHDRAW
+            <span class="btn-icon">🏦</span> WITHDRAW
         </button>
 
         <button class="menu-btn" onclick="window.location.href='/transfer'">
-            TRANSFER
+            <span class="btn-icon">📤</span> TRANSFER
         </button>
 
-        <button class="menu-btn" onclick="window.location.href='/transaction-history'">
-            TRANSACTION HISTORY
+        <button class="menu-btn" onclick="window.location.href='/transactions'">
+            <span class="btn-icon">📊</span> TRANSACTION HISTORY
         </button>
     </div>
 </div>

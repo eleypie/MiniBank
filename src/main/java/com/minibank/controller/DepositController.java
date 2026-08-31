@@ -1,6 +1,7 @@
 package com.minibank.controller;
 
 import com.minibank.dao.AccountDao;
+import com.minibank.dao.TransactionDao;
 import com.minibank.model.Account;
 import com.minibank.model.User;
 import jakarta.servlet.http.HttpSession;
@@ -14,15 +15,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class DepositController {
 
     private final AccountDao accountDao;
+    private final TransactionDao transactionDao;
 
-    public DepositController(AccountDao accountDao) {
+    public DepositController(AccountDao accountDao, TransactionDao transactionDao) {
         this.accountDao = accountDao;
+        this.transactionDao = transactionDao;
     }
 
     @GetMapping("/deposit")
     public String showDeposit(HttpSession session, Model model) {
 
         User user = (User) session.getAttribute("loggedInUser");
+
+        // ============================================================
+        // VALIDATION: Check if user is logged in
+        // ============================================================
         if (user == null) {
             return "redirect:/login";
         }
@@ -32,9 +39,15 @@ public class DepositController {
             return "redirect:/dashboard";
         }
 
+        // ============================================================
+        // SET MODEL ATTRIBUTES FOR VIEW
+        // ============================================================
         model.addAttribute("userName", user.getFirstName());
         model.addAttribute("balance", account.getBalance());
 
+        // ============================================================
+        // RETURN VIEW
+        // ============================================================
         return "deposit";
     }
 
@@ -44,6 +57,10 @@ public class DepositController {
                                 HttpSession session) {
 
         User user = (User) session.getAttribute("loggedInUser");
+
+        // ============================================================
+        // VALIDATION: Check if user is logged in
+        // ============================================================
         if (user == null) {
             return "redirect:/login";
         }
@@ -53,27 +70,39 @@ public class DepositController {
             return "redirect:/dashboard";
         }
 
-        model.addAttribute("userName", user.getFirstName());
+        // Common model attributes
+        model.addAttribute("userName", user.getFirstName() + " " + user.getLastName());
+        model.addAttribute("balance", account.getBalance());
+        model.addAttribute("amount", amount);
 
+        // ============================================================
+        // VALIDATION 1: Amount must be greater than 0
+        // ============================================================
         if (amount <= 0) {
-            model.addAttribute("errorMessage", "Amount must be greater than 0.");
-            model.addAttribute("balance", account.getBalance());
-            model.addAttribute("amount", amount);
+            model.addAttribute("errorMessage", "⚠️ Please enter a valid amount greater than zero.");
             return "deposit";
         }
 
-        // Capture old balance before changing it
+        // ============================================================
+        // PROCESS DEPOSIT
+        // ============================================================
         double oldBalance = account.getBalance();
         double newBalance = oldBalance + amount;
 
-        // Update and persist
+        // Update account balance
         accountDao.updateBalance(account.getId(), newBalance);
 
-        // Attributes for the receipt view
+        // Log transaction: no sender (money entering the system), receiver = this account
+        transactionDao.logTransaction(null, account.getId(), amount, "DEPOSIT");
+
+        // ============================================================
+        // SUCCESS - Return receipt data
+        // ============================================================
         model.addAttribute("depositSuccess", true);
         model.addAttribute("oldBalance", oldBalance);
         model.addAttribute("newBalance", newBalance);
         model.addAttribute("balance", newBalance);
+        model.addAttribute("amount", amount);
 
         return "deposit";
     }

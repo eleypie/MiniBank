@@ -5,14 +5,19 @@ import com.minibank.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserDao {
 
+    // ============================================================
+    // AUTHENTICATE USER
+    // ============================================================
     public User authenticate(String mobileNumber, String pin) {
-        String query1 = "SELECT * FROM user WHERE mobile_number = ? AND pin = ?";
+        String query = "SELECT * FROM user WHERE mobile_number = ? AND pin = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query1)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, mobileNumber);
             stmt.setString(2, pin);
@@ -24,16 +29,18 @@ public class UserDao {
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("mobile_number"),
-                        rs.getString("email"),
                         rs.getString("pin")
                 );
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null; // Invalid credentials
+        return null;
     }
 
+    // ============================================================
+    // GET USER BY ID
+    // ============================================================
     public User getUserById(int userId) {
         String query = "SELECT * FROM user WHERE id = ?";
 
@@ -49,14 +56,12 @@ public class UserDao {
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getString("mobile_number"),
-                        rs.getString("email"),
                         rs.getString("pin")
                 );
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null; // User not found
+        return null;
     }
 }
-

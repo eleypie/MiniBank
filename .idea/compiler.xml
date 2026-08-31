@@ -9,9 +9,7 @@
         <module name="MiniBank" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="src" target="1.5" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="21" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">

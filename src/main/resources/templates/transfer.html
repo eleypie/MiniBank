@@ -2,16 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiniBank - Transfer</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
 
 <div class="mobile-card">
 
     <div class="header">
-        <a class="back-link" th:href="@{/dashboard}">&larr;</a>
-        <div class="brand">Mini<span>Bank</span></div>
+        <a class="back-link" th:href="@{/dashboard}"><i class="fas fa-arrow-left"></i></a>
+        <div class="brand">
+            <span class="brand-icon">✦</span>
+            <span class="brand-name">Mini<span>Bank</span></span>
+        </div>
         <div class="welcome">
             <div class="welcome-label">Welcome back</div>
             <div class="welcome-name" th:text="${userName}">User</div>
@@ -19,7 +24,7 @@
     </div>
 
     <div class="transaction-card">
-        <div class="transaction-title">Transfer Money</div>
+        <div class="transaction-title"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i>Transfer Money</div>
 
         <form th:action="@{/transfer}" method="post">
 
@@ -34,13 +39,21 @@
                    class="amount-input" placeholder="₱0.00"
                    th:value="${amount}">
 
-            <p class="field-hint" th:classappend="${errorMessage} != null ? 'error' : ''"
-               th:text="${errorMessage} != null ? ${errorMessage} : 'Enter valid amount'">
-                Enter valid amount
+            <!-- Error message -->
+            <p class="field-hint" th:classappend="${errorMessage != null} ? 'error' : ''">
+                <span th:if="${errorMessage != null}">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span th:text="${errorMessage}"></span>
+                </span>
+                <span th:unless="${errorMessage != null}">
+                    Enter amount to send
+                </span>
             </p>
 
             <div class="confirm-row">
-                <button type="submit" class="confirm-btn">Confirm</button>
+                <button type="submit" class="confirm-btn">
+                    <i class="fas fa-paper-plane" style="margin-right: 8px;"></i> Send Money
+                </button>
             </div>
         </form>
 
@@ -49,25 +62,34 @@
         </div>
     </div>
 
+    <!-- Result Card -->
     <div class="result-card" th:if="${transferSuccess} != null">
         <div class="result-status" th:classappend="${transferSuccess} ? '' : 'failed'"
-             th:text="${transferSuccess} ? 'Transfer Successful!' : 'Transfer Failed'">
+             th:text="${transferSuccess} ? '✅ Transfer Successful!' : '❌ Transfer Failed'">
             Transfer Successful!
         </div>
         <hr class="result-divider">
-        <div class="result-row">
+        <div class="result-row" th:if="${transferSuccess}">
             <span class="label">Sent To</span>
-            <span class="value" th:text="${recipientNumber}">09XXXXXXXXX</span>
+            <span class="value" th:text="${recipientName} + ' (' + ${recipientNumber} + ')'">John Doe (09171234567)</span>
         </div>
         <div class="result-row">
             <span class="label">Old Balance</span>
             <span class="value" th:text="'₱' + ${oldBalance}">₱0.00</span>
         </div>
         <div class="result-row">
+            <span class="label">Amount Sent</span>
+            <span class="value" th:text="'₱' + ${amount}">₱0.00</span>
+        </div>
+        <div class="result-row">
             <span class="label">New Balance</span>
             <span class="value" th:text="'₱' + ${newBalance}">₱0.00</span>
         </div>
         <hr class="result-divider">
+        <div class="result-row" th:if="${transferSuccess}">
+            <span class="label">Status</span>
+            <span class="value" style="color: #48cae4;">✓ Completed</span>
+        </div>
     </div>
 
 </div>

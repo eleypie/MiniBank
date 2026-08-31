@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniBank - Transaction History</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+<div class="mobile-card">
+
+    <!-- App Header -->
+    <div class="header">
+        <a class="back-link" th:href="@{/dashboard}"><i class="fas fa-arrow-left"></i></a>
+        <div class="brand">
+            <span class="brand-icon">✦</span>
+            <span class="brand-name">Mini<span>Bank</span></span>
+        </div>
+        <div class="welcome">
+            <div class="welcome-label">Welcome back</div>
+            <div class="welcome-name" th:text="${userName}">User</div>
+        </div>
+    </div>
+
+    <!-- Balance Overview -->
+    <div class="balance-banner">
+        <div class="banner-title">Transaction History</div>
+        <div class="banner-balance">
+            <span class="label">Available Balance:</span>
+            <span class="value" th:text="'₱ ' + ${#numbers.formatDecimal(accountBalance, 1, 'COMMA', 2, 'POINT')}">₱ 0.00</span>
+        </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="filter-row">
+        <a class="filter-chip" th:classappend="${filter} == 'ALL' ? 'active' : ''"
+           th:href="@{/transactions(filter='ALL')}">All</a>
+        <a class="filter-chip" th:classappend="${filter} == 'DEPOSIT' ? 'active' : ''"
+           th:href="@{/transactions(filter='DEPOSIT')}">Deposit</a>
+        <a class="filter-chip" th:classappend="${filter} == 'WITHDRAW' ? 'active' : ''"
+           th:href="@{/transactions(filter='WITHDRAW')}">Withdraw</a>
+        <a class="filter-chip" th:classappend="${filter} == 'TRANSFER' ? 'active' : ''"
+           th:href="@{/transactions(filter='TRANSFER')}">Transfer</a>
+    </div>
+
+    <!-- Transaction List -->
+    <div class="history-list">
+
+        <div th:each="txn : ${transactions}" class="history-card">
+
+            <div class="history-icon-circle"
+                 th:classappend="${txn.type == 'DEPOSIT'} ? 'deposit' : (${txn.type == 'WITHDRAW'} ? 'withdraw' : 'transfer')">
+                <i th:if="${txn.type == 'DEPOSIT'}" class="fas fa-arrow-down"></i>
+                <i th:if="${txn.type == 'WITHDRAW'}" class="fas fa-arrow-up"></i>
+                <i th:if="${txn.type == 'TRANSFER'}" class="fas fa-arrow-right"></i>
+            </div>
+
+            <div class="history-info">
+                <div class="history-title" th:text="${txn.type}">
+                    Deposit
+                </div>
+                <div class="history-date" th:text="${txn.dateFormatted}">Aug 31, 2026 - 10:09 PM</div>
+
+                <!-- Show receiver name for outgoing transfers -->
+                <div class="history-subtext"
+                     th:if="${txn.type == 'TRANSFER' and txn.senderAccountId == accountId}"
+                     th:text="'To: ' + ${txn.receiverName}">
+                    To: John Doe
+                </div>
+
+                <!-- Show sender name for incoming transfers -->
+                <div class="history-subtext"
+                     th:if="${txn.type == 'TRANSFER' and txn.receiverAccountId == accountId}"
+                     th:text="'From: ' + ${txn.senderName}">
+                    From: John Doe
+                </div>
+
+                <!-- Show reference for deposits and withdrawals -->
+                <div class="history-subtext"
+                     th:if="${txn.type == 'DEPOSIT' or txn.type == 'WITHDRAW'}"
+                     th:text="'Reference: ' + ${txn.reference}">
+                    Reference: #TX-0001
+                </div>
+            </div>
+
+            <div class="history-amount"
+                 th:classappend="(${txn.type == 'WITHDRAW'} or (${txn.type == 'TRANSFER'} and ${txn.senderAccountId == accountId})) ? 'negative' : 'positive'"
+                 th:text="(${txn.type == 'WITHDRAW'} or (${txn.type == 'TRANSFER'} and ${txn.senderAccountId == accountId}) ? '- ₱' : '+ ₱') + ${txn.amountFormatted}">
+                + ₱ 200.00
+            </div>
+
+        </div>
+
+        <div class="empty-state" th:if="${#lists.isEmpty(transactions)}">
+            <i class="fas fa-inbox" style="font-size: 32px; color: #4a5a7a; margin-bottom: 12px; display: block;"></i>
+            <p style="font-size: 16px; color: #8892b0;">No transactions yet</p>
+            <p style="font-size: 12px; color: #4a5a7a; margin-top: 4px;">Your transactions will appear here</p>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -11,6 +11,9 @@ import java.sql.ResultSet;
 @Repository
 public class AccountDao {
 
+    // ============================================================
+    // GET ACCOUNT BY USER ID
+    // ============================================================
     public Account getAccountByUserId(int userId){
         String query = "SELECT * FROM account WHERE user_id = ?";
 
@@ -34,8 +37,12 @@ public class AccountDao {
         return null;
     }
 
+    // ============================================================
+    // UPDATE ACCOUNT BALANCE
+    // ============================================================
     public boolean updateBalance(int accountId, double newBalance) {
         String query = "UPDATE account SET balance = ? WHERE id = ?";
+
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
@@ -50,13 +57,16 @@ public class AccountDao {
         return false;
     }
 
+    // ============================================================
+    // GET ACCOUNT BY MOBILE NUMBER
+    // ============================================================
     public Account getAccountbyMobileNumber(String mobileNumber){
         String query = "SELECT a.* FROM account a " +
-                       "JOIN user u ON a.user_id = u.id " +
-                       "WHERE u.mobile_number = ?";
+                "JOIN user u ON a.user_id = u.id " +
+                "WHERE u.mobile_number = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query)){
+             PreparedStatement stmt = conn.prepareStatement(query)){
 
             stmt.setString(1, mobileNumber);
 
@@ -74,5 +84,4 @@ public class AccountDao {
         }
         return null;
     }
-
 }
