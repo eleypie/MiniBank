@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>MiniBank Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="mobile-card">
+    <div class="header">
+        <span style="font-size: 20px; cursor: pointer;">&larr;</span>
+        <div style="font-weight: bold; color: #8ed338;">Mini<span style="color: #fff;">Bank</span></div>
+        <div style="text-align: right;">
+            <div style="font-size: 12px; color: #a0a0a0;">Welcome back</div>
+            <div style="color: #8ed338; font-weight: bold; font-size: 14px;" th:text="${userName}">User</div>
+        </div>
+    </div>
+
+    <div class="balance-card">
+        <div class="balance-title">Current Balance</div>
+        <div class="balance-amount">₱<span th:text="${balance}">0.00</span></div>
+        <div class="account-number">Mobile No. <span th:text="${mobileNumber}">00000000000</span></div>
+    </div>
+
+    <div class="menu-options">
+        <button class="menu-btn" onclick="window.location.href='/deposit'">
+            DEPOSIT
+        </button>
+
+        <button class="menu-btn" onclick="window.location.href='/withdraw'">
+            WITHDRAW
+        </button>
+
+        <button class="menu-btn" onclick="window.location.href='/transfer'">
+            TRANSFER
+        </button>
+
+        <button class="menu-btn" onclick="window.location.href='/transaction-history'">
+            TRANSACTION HISTORY
+        </button>
+    </div>
+</div>
+
+</body>
+</html>

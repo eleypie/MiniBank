@@ -1,0 +1,407 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #131C01 0%, #568203 98%);
+    min-height: 100vh;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mobile-card {
+    width: 390px;
+    height: 844px;
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Logo Header */
+.logo-box {
+    text-align: center;
+    margin: 40px 0;
+}
+
+.logo-badge {
+    display: inline-block;
+    background: #628f1e;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.logo-badge span {
+    color: #a3e635;
+}
+
+/* Forms & Inputs */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: #a0a0a0;
+    margin-bottom: 8px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #486e18;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+}
+
+.input-field::placeholder {
+    color: #5d7e32;
+}
+
+/* Buttons */
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #5a8a1f;
+    border-radius: 12px;
+    color: #b3df72;
+    font-weight: bold;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.admin-link {
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: 20px;
+    color: #a0a0a0;
+    font-size: 13px;
+    text-decoration: none;
+}
+
+/* Dashboard UI Components */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.header .back-link {
+    font-size: 20px;
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.header .brand {
+    font-weight: bold;
+    color: #8ed338;
+}
+
+.header .brand span {
+    color: #fff;
+}
+
+.header .welcome {
+    text-align: right;
+}
+
+.header .welcome-label {
+    font-size: 12px;
+    color: #a0a0a0;
+}
+
+.header .welcome-name {
+    color: #8ed338;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.balance-card {
+    border: 4px;
+    border-image: linear-gradient(135deg, #568203 50%, #131C01 50%) 1;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.balance-title { font-size: 12px; color: #8C8C8C; margin-bottom: 8px; }
+.balance-amount { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+.account-number { font-size: 13px; color: #DADADA; }
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-weight: normal;
+}
+
+.menu-btn {
+    width: 100%;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #DADADA;
+    border-radius: 12px;
+    color: #8C8C8C;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/* =========================================
+   ADDITIONS: Deposit / Withdraw / Transfer
+   ========================================= */
+
+.transaction-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #486e18;
+    border-radius: 20px;
+    padding: 24px;
+    margin-bottom: 20px;
+}
+
+.transaction-title {
+    text-align: center;
+    color: #8ed338;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.amount-input {
+    width: 100%;
+    padding: 18px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #486e18;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+.amount-input::placeholder {
+    color: #5d7e32;
+}
+
+.field-hint {
+    font-size: 12px;
+    color: #5d7e32;
+    font-style: italic;
+    margin: 0 0 4px 2px;
+}
+
+.field-hint.error {
+    color: #e07856;
+    font-style: normal;
+}
+
+.recipient-group {
+    margin-bottom: 18px;
+}
+
+.recipient-label {
+    display: block;
+    font-size: 13px;
+    color: #a0a0a0;
+    margin-bottom: 8px;
+}
+
+.recipient-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #486e18;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+}
+
+.recipient-input::placeholder {
+    color: #5d7e32;
+}
+
+.confirm-row {
+    display: flex;
+    justify-content: flex-end;
+    margin: 16px 0 18px;
+}
+
+.confirm-btn {
+    padding: 12px 30px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid #5a8a1f;
+    border-radius: 10px;
+    color: #b3df72;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.confirm-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.available-balance {
+    text-align: center;
+    font-size: 13px;
+    color: #DADADA;
+    font-style: italic;
+}
+
+/* Result / receipt card */
+.result-card {
+    background: #ffffff;
+    color: #1a1a1a;
+    border-radius: 16px;
+    padding: 24px 20px;
+}
+
+.result-status {
+    text-align: center;
+    color: #568203;
+    font-weight: 700;
+    font-style: italic;
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+.result-status.failed {
+    color: #c0392b;
+}
+
+.result-divider {
+    border: none;
+    border-top: 2px dashed #568203;
+    margin: 10px 0;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    font-size: 14px;
+}
+
+.result-row .label {
+    color: #666666;
+}
+
+.result-row .value {
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+/* =========================================
+   ADDITIONS: Transaction History
+   ========================================= */
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.history-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid #33500f;
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.history-item-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.history-type {
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.history-type.deposit { color: #8ed338; }
+.history-type.withdraw { color: #e07856; }
+.history-type.transfer { color: #5cc9e0; }
+
+.history-date {
+    font-size: 12px;
+    color: #8C8C8C;
+}
+
+.history-item-right {
+    text-align: right;
+}
+
+.history-amount {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.history-amount.positive { color: #8ed338; }
+.history-amount.negative { color: #e07856; }
+
+.history-balance {
+    font-size: 11px;
+    color: #8C8C8C;
+    margin-top: 2px;
+}
+
+.empty-state {
+    text-align: center;
+    color: #8C8C8C;
+    font-size: 14px;
+    padding: 60px 0;
+}
+
+.filter-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.filter-chip {
+    flex: 1;
+    text-align: center;
+    padding: 8px 0;
+    border: 1px solid #486e18;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #a0a0a0;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.filter-chip.active {
+    background: #628f1e;
+    color: #ffffff;
+    border-color: #628f1e;
+}
