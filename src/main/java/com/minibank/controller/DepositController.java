@@ -71,7 +71,7 @@ public class DepositController {
         }
 
         // Common model attributes
-        model.addAttribute("userName", user.getFirstName() + " " + user.getLastName());
+        model.addAttribute("userName", user.getFirstName());
         model.addAttribute("balance", account.getBalance());
         model.addAttribute("amount", amount);
 
