@@ -31,11 +31,11 @@ A mobile banking simulation web app built with **Java Spring Boot** and **Thymel
 
 | Login | Dashboard | Deposit |
 |---|---|---|
-| ![Login Screenshot](_screenshots/login.png) | ![Dashboard Screenshot](_screenshots/dashboard.png) | ![Deposit Screenshot](_screenshots/deposit.png) ![Deposit Screenshot 2](_screenshots/reposit2.png) |
+| ![Login Screenshot](screenshots/login.png) | ![Dashboard Screenshot](screenshots/dashboard.png) | ![Deposit Screenshot](screenshots/deposit.png) ![Deposit Screenshot 2](screenshots/reposit2.png) |
 
 | Withdraw | Transfer | Transaction History |
 |---|---|---|
-| ![Withdraw Screenshot](_screenshots/withdraw.png) | ![Transfer Screenshot](_screenshots/transfer.png) | ![Transaction Screenshot](_screenshots/transaction.png) |
+| ![Withdraw Screenshot](screenshots/withdraw.png) | ![Transfer Screenshot](screenshots/transfer.png) | ![Transaction Screenshot](screenshots/transaction.png) |
 
 ## Getting Started
 
