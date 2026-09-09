@@ -37,38 +37,6 @@ A mobile banking simulation web app built with **Java Spring Boot** and **Thymel
 |---|---|---|
 | ![Withdraw Screenshot](_screenshots/withdraw.png) | ![Transfer Screenshot](_screenshots/transfer.png) | ![Transaction Screenshot](_screenshots/transaction.png) |
 
-## Database Schema
-
-Three related tables: `user` → `account` (1-to-1) → `transaction` (1-to-many, both as sender and receiver).
-
-```sql
-CREATE TABLE user (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    mobile_number VARCHAR(15) UNIQUE NOT NULL,
-    pin VARCHAR(10) NOT NULL
-);
-
-CREATE TABLE account (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    user_id INT NOT NULL,
-    balance DECIMAL(15,2) DEFAULT 0.00,
-    FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
-);
-
-CREATE TABLE transaction (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    sender_account_id INT NULL,
-    receiver_account_id INT NULL,
-    amount DECIMAL(15,2) NOT NULL,
-    transaction_type VARCHAR(20) NOT NULL,
-    transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (sender_account_id) REFERENCES account(id),
-    FOREIGN KEY (receiver_account_id) REFERENCES account(id)
-);
-```
-
 ## Getting Started
 
 ### Prerequisites
