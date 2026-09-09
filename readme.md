@@ -116,11 +116,3 @@ src/
 | GET / POST | `/withdraw` | Withdraw form + processing |
 | GET / POST | `/transfer` | Transfer form + processing |
 | GET | `/transactions` | Transaction history (supports `?filter=ALL\|DEPOSIT\|WITHDRAW\|TRANSFER`) |
-
-## License
-
-_Add a license if this is meant to be reused by others (e.g. MIT)._
-
-## Author
-
-Loriel Ann — [github.com/eleypie](https://github.com/eleypie)
